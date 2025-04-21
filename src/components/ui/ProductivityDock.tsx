@@ -24,11 +24,29 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({ className = 
   const [isDragOver, setIsDragOver] = useState(false);
   // Confetti state
   const [showConfetti, setShowConfetti] = useState(false);
+  // Screen width for responsiveness
+  const [screenWidth, setScreenWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
     
   // Get the linked task if one exists
   const linkedTask = pomodoro.linkedTaskId 
     ? taskStore.getTaskById(pomodoro.linkedTaskId) 
     : null;
+  
+  // Listen for window resize events to update the screen width
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    // Initial check
+    handleResize();
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   
   // Unified function to toggle Pomodoro timer (but not auto-start)
   const togglePomodoroAndMusic = () => {
@@ -321,23 +339,27 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({ className = 
           // Collapsed View
           <div className="flex flex-row items-center justify-between relative">
             {/* Pomodoro Timer */}
-            <div className="flex-1" onClick={(e) => e.stopPropagation()}>
+            <div className={`${screenWidth < 500 ? 'flex-grow' : 'flex-1'}`} onClick={(e) => e.stopPropagation()}>
               {/* Use simplified NavbarPomodoroTimer without its own controls */}
               <NavbarPomodoroTimer dockMode={true} />
             </div>
-            <div className="flex">
-            {/* Separator */}
-            <div className="mx-3 h-6 w-px bg-border/50"></div>
             
-            {/* Display the lofi station information */}
-            <div className="flex-1 flex items-center" onClick={(e) => e.stopPropagation()}>
-              <LofiPlayer minimal={true} />
-            </div>
+            {screenWidth >= 400 && (
+              <>
+                {/* Separator */}
+                <div className="mx-2 h-6 w-px bg-border/50"></div>
+                
+                {/* Display the lofi station information */}
+                <div className={`${screenWidth < 500 ? 'w-24' : 'flex-1'} flex items-center`} onClick={(e) => e.stopPropagation()}>
+                  <LofiPlayer minimal={true} />
+                </div>
+              </>
+            )}
             
             {/* Controls group at far right */}
-            <div className="flex items-center space-x-2" onClick={(e) => e.stopPropagation()}>
-              {/* Show Link Task button if no task is linked */}
-              {!linkedTask && (
+            <div className="flex items-center space-x-1 md:space-x-2" onClick={(e) => e.stopPropagation()}>
+              {/* Show Link Task button if no task is linked and screen is wide enough */}
+              {!linkedTask && screenWidth >= 460 && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -411,7 +433,6 @@ export const ProductivityDock: React.FC<ProductivityDockProps> = ({ className = 
                 </svg>
               </button>
             </div>
-          </div>
           </div>
         )}
       </div>

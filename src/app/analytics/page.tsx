@@ -8,18 +8,10 @@ import { Breadcrumbs } from '@/components/ui/Breadcrumbs';
 import { useEffect, useState } from 'react';
 import { useLocalUser } from '@/context/LocalUserProvider';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
-import { PomodoroSession, Task } from '@/types';
+import { Task } from '@/types';
 
 // Time period types
 type TimePeriod = 'daily' | 'weekly' | 'monthly' | 'annual';
-
-// Chart data types
-interface TimeActivityDataPoint {
-  name: string;
-  Tasks: number;
-  Pomodoros: number;
-  [key: string]: string | number; // For any additional properties
-}
 
 // Info tooltip component
 const InfoTooltip = ({ text }: { text: string }) => {
@@ -56,16 +48,16 @@ export default function AnalyticsPage() {
     completed: 0,
     inProgress: 0,
     notStarted: 0,
+    overdue: 0,
+    total: 0,
     completionRate: 0,
     highPriority: 0,
     mediumPriority: 0,
-    lowPriority: 0,
-    overdue: 0,
-    total: 0
+    lowPriority: 0
   });
-
+  
   // Time period specific data
-  const [timeActivityData, setTimeActivityData] = useState<Array<TimeActivityDataPoint>>([]);
+  const [timeActivityData, setTimeActivityData] = useState<Array<any>>([]);
   const [productivityScore, setProductivityScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [pomodoroStats, setPomodoroStats] = useState({
@@ -216,9 +208,9 @@ export default function AnalyticsPage() {
   };
 
   // Update activity data based on selected time period
-  const updateTimeActivityData = (period: TimePeriod, userTasks: Task[], userSessions: PomodoroSession[]) => {
+  const updateTimeActivityData = (period: TimePeriod, userTasks: Task[], userSessions: any[]) => {
     const now = new Date();
-    let data: TimeActivityDataPoint[] = [];
+    let data: any[] = [];
     
     if (period === 'daily') {
       // Hourly breakdown for today
@@ -246,11 +238,11 @@ export default function AnalyticsPage() {
       userSessions
         .filter(session => {
           if (!session.actualEndAt) return false;
-          const endDate = session.actualEndAt ? new Date(session.actualEndAt) : new Date();
+          const endDate = new Date(session.actualEndAt);
           return endDate >= today && session.status === 'completed';
         })
         .forEach(session => {
-          const endDate = session.actualEndAt ? new Date(session.actualEndAt) : new Date();
+          const endDate = new Date(session.actualEndAt);
           const hour = endDate.getHours();
           hourlyData[hour].pomodoros++;
         });
@@ -297,7 +289,7 @@ export default function AnalyticsPage() {
           return endDate >= weekStart && session.status === 'completed';
         })
         .forEach(session => {
-          const endDate = session.actualEndAt ? new Date(session.actualEndAt) : new Date();;
+          const endDate = new Date(session.actualEndAt);
           const dayOfWeek = endDate.getDay();
           dailyData[dayOfWeek].pomodoros++;
         });
@@ -348,7 +340,7 @@ export default function AnalyticsPage() {
                  session.status === 'completed';
         })
         .forEach(session => {
-          const endDate =session.actualEndAt ? new Date(session.actualEndAt) : new Date();
+          const endDate = new Date(session.actualEndAt);
           const day = endDate.getDate();
           const weekIndex = Math.floor((day - 1) / 7);
           weeklyData[weekIndex].pomodoros++;
@@ -364,6 +356,7 @@ export default function AnalyticsPage() {
     } else if (period === 'annual') {
       // Monthly breakdown for current year
       const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const yearStart = new Date(now.getFullYear(), 0, 1);
       
       const monthlyData = Array(12).fill(0).map((_, i) => ({
         month: monthNames[i],
@@ -393,7 +386,7 @@ export default function AnalyticsPage() {
                  session.status === 'completed';
         })
         .forEach(session => {
-          const endDate = session.actualEndAt ? new Date(session.actualEndAt) : new Date();
+          const endDate = new Date(session.actualEndAt);
           const month = endDate.getMonth();
           monthlyData[month].pomodoros++;
         });
@@ -410,10 +403,10 @@ export default function AnalyticsPage() {
   };
 
   // Generate productivity trend data
-  const generateProductivityTrend = (period: TimePeriod, userTasks: Task[], userSessions: PomodoroSession[]) => {
+  const generateProductivityTrend = (period: TimePeriod, userTasks: Task[], userSessions: any[]) => {
     const now = new Date();
-    const trendData: Array<{date: string, score: number}> = [];
-    const calculateDailyScore = (tasks: Task[], sessions: PomodoroSession[], day: Date) => {
+    let trendData: Array<{date: string, score: number}> = [];
+    const calculateDailyScore = (tasks: Task[], sessions: any[], day: Date) => {
       const dayStart = new Date(day.getFullYear(), day.getMonth(), day.getDate());
       const dayEnd = new Date(day.getFullYear(), day.getMonth(), day.getDate(), 23, 59, 59);
       
@@ -508,6 +501,7 @@ export default function AnalyticsPage() {
       // Show last 6 months using real data
       for (let i = 5; i >= 0; i--) {
         const monthDate = new Date(now.getFullYear(), now.getMonth() - i, 1);
+        const monthEnd = new Date(now.getFullYear(), now.getMonth() - i + 1, 0);
         const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         
         // Get tasks and pomodoros for this month to calculate real score
@@ -540,16 +534,12 @@ export default function AnalyticsPage() {
   };
 
   // Custom tooltip for charts
-  const CustomTooltip = ({ active, payload, label }: {
-    active?: boolean;
-    payload?: {name: string, value: string, color: string}[];
-    label?: string;
-  }) => {
+  const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-background border border-border p-2 rounded shadow-md">
           <p className="font-medium">{`${label}`}</p>
-          {payload.map((entry, index: number) => (
+          {payload.map((entry: any, index: number) => (
             <p key={`item-${index}`} style={{ color: entry.color }}>
               {`${entry.name}: ${entry.value}`}
             </p>
@@ -614,10 +604,10 @@ export default function AnalyticsPage() {
               progress={productivityScore} 
               size={140} 
               strokeWidth={10}
+              label={`${productivityScore}`}
             />
           </div>
           <div className="text-center">
-            <p className="text-3xl font-bold mt-[-50px] mb-4">{productivityScore}</p>
             <p className="text-sm text-muted-foreground mb-2">Your productivity level is {productivityScore >= 80 ? 'Excellent!' : productivityScore >= 60 ? 'Good!' : productivityScore >= 40 ? 'Average' : 'Needs improvement'}</p>
             
             <div className="mt-4 pt-4 border-t border-border">

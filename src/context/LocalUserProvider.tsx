@@ -151,7 +151,11 @@ export function LocalUserProvider({ children }: { children: React.ReactNode }) {
         setProductivityScore(newScore);
 
         // Update the stats with new productivity score
-        updateStats({ productivityScore: newScore });
+        setStats((prevStats) => ({
+          ...prevStats,
+          productivityScore: newScore,
+        })
+        );
       };
 
       calculateProductivityScore();
@@ -163,7 +167,6 @@ export function LocalUserProvider({ children }: { children: React.ReactNode }) {
     stats.pomodorosAbandoned,
     stats.currentStreak,
     userId,
-    updateStats,
   ]);
 
   // Check streak once per day
