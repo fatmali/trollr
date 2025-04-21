@@ -3,7 +3,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { v4 as uuidv4 } from 'uuid';
-import { TrollMessage, TrollTriggerType, MCPContext, MCPResponse } from '@/types';
+import { TrollMessage, TrollTriggerType, MCPContext } from '@/types';
 
 // Temporary local implementation of trollr messages until Azure Functions are set up
 const LOCAL_TROLL_RESPONSES: Record<TrollTriggerType, string[]> = {

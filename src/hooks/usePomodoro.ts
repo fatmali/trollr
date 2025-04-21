@@ -155,8 +155,8 @@ export const usePomodoroStore = create<PomodoroTimerState>()(
                 body: 'Great job! Time for a break.',
                 icon: '/favicon.ico'
               });
-            } catch (_) {
-              console.log('Notification permission not granted');
+            } catch (error) {
+              console.log('Notification permission not granted', error);
             }
           }
           
@@ -181,8 +181,8 @@ export const usePomodoroStore = create<PomodoroTimerState>()(
                 body: 'Break time is over. Ready for another focus session?',
                 icon: '/favicon.ico'
               });
-            } catch (_) {
-              console.log('Notification permission not granted');
+            } catch (error) {
+              console.log('Notification permission not granted', error);
             }
           }
           
@@ -277,8 +277,8 @@ export const usePomodoroStore = create<PomodoroTimerState>()(
                   icon: '/favicon.ico'
                 });
               }
-            } catch (_) {
-              console.log('Notification permission not granted');
+            } catch (error) {
+              console.log('Notification permission not granted', error);
             }
           }
           

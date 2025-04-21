@@ -8,19 +8,13 @@ const cardVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-gray-200 glass-morphism",
-        elevated: "border-gray-200 shadow-md glass-morphism",
-        outline: "border-gray-300 shadow-none glass-morphism",
-        glass: "glass-morphism glass-morphism-hover",
-        priority: {
           low: "border-l-4 border-l-green-500 glass-morphism",
           medium: "border-l-4 border-l-yellow-500 glass-morphism",
           high: "border-l-4 border-l-red-500 glass-morphism",
-        },
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "medium",
     },
   }
 );

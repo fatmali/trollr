@@ -12,12 +12,10 @@ import { useTrollMessages } from '@/hooks/useTrollMessages';
 export const TaskList: React.FC = () => {
   const { userId, stats, updateStats } = useLocalUser();
   const { 
-    addTask, 
     updateTask, 
     deleteTask, 
     completeTask, 
     getFilteredTasks,
-    getTaskById
   } = useTaskStore();
   const { generateMessage } = useTrollMessages();
   
@@ -41,51 +39,7 @@ export const TaskList: React.FC = () => {
     searchQuery: searchQuery.length > 0 ? searchQuery : undefined,
   });
   
-  // Function to handle task submission (both add and edit)
-  const handleTaskSubmit = (
-    userId: string,
-    title: string,
-    description: string,
-    priority: TaskPriority,
-    deadline?: string,
-    tags?: string[],
-    codeSnippet?: string,
-    taskId?: string
-  ) => {
-    if (taskId) {
-      // Editing existing task
-      updateTask(taskId, {
-        title,
-        description,
-        priority,
-        deadline,
-        tags: tags || [],
-        codeSnippet,
-      });
-      setEditingTask(undefined);
-    } else {
-      // Creating new task
-      addTask(userId, title, description, priority, deadline, tags, codeSnippet);
-      
-      // Generate a trollr message for new task
-      const context = {
-        userData: {
-          id: userId,
-          displayName: "Developer",
-          workHabits: [],
-          commonExcuses: [],
-          productivityPatterns: [],
-          stats: stats
-        },
-        timeData: {
-          timeOfDay: new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening',
-          dayOfWeek: new Date().toLocaleDateString('en-US', { weekday: 'long' }),
-        }
-      };
-      
-      generateMessage(userId, context, 'inactivity');
-    }
-    
+  const handleTaskSubmit = () => {  
     setIsFormVisible(false);
   };
   

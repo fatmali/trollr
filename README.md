@@ -27,18 +27,22 @@ Trollr is a todo app with built-in AI trolling to motivate productivity. It comb
 
 1. Clone the repository
 2. Install dependencies
+
 ```bash
 npm install
 ```
-3. Start the development server
+
+3.Start the development server
+
 ```bash
 npm run dev
 ```
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+1. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## Project Structure
 
-```
+```text
 /src
   /app      # Next.js App Router
   /components

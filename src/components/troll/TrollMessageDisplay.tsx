@@ -7,7 +7,7 @@ import { useTrollMessages } from '@/hooks/useTrollMessages';
 import { useLocalUser } from '@/context/LocalUserProvider';
 
 export const TrollMessageDisplay: React.FC = () => {
-  const { userId, displayName, updateAchievementProgress, productivityScore } = useLocalUser();
+  const { userId, updateAchievementProgress, productivityScore } = useLocalUser();
   const { messages, getUnreadMessages, markAsRead, addReaction } = useTrollMessages();
   const [currentMessage, setCurrentMessage] = useState<TrollMessage | null>(null);
   const [displayedText, setDisplayedText] = useState('');

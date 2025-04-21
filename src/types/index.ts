@@ -29,6 +29,9 @@ export interface User {
     trollIntensity: number; // 1-10 scale
     pomodoroDuration: number;
     breakDuration: number;
+    lofiEnabled?: boolean;
+    lofiVolume?: number;
+    lofiStation?: string;
   };
   stats: {
     tasksCompleted: number;

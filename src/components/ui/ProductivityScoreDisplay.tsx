@@ -36,7 +36,7 @@ export function ProductivityScoreDisplay({
   const [animateScore, setAnimateScore] = useState<boolean>(false);
   
   // Simplified monochrome palette - no colors
-  const getScoreColor = (score: number) => {
+  const getScoreColor = () => {
     return 'currentColor'; // Use currentColor to respect the text color in light/dark mode
   };
   
@@ -146,7 +146,7 @@ export function ProductivityScoreDisplay({
       <CircularProgress
         progress={localScore}
         size={size}
-        color={getScoreColor(localScore)}
+        color={getScoreColor()}
         backgroundColor="currentColor" 
         strokeWidth={Math.max(Math.round(size / 16), 2)} // Thinner stroke
         monochrome={true} // Ensure monochrome theme is used

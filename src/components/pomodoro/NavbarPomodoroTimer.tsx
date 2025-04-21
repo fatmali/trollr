@@ -15,7 +15,25 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
   dockMode = false,
 }) => {
   const { userId, preferences } = useLocalUser();
-  const pomodoro = usePomodoro();
+  const {
+    setDuration,
+    setBreakDuration,
+    progress,
+    isActive,
+    formattedTimeRemaining,
+    isPaused,
+    linkedTaskId,
+    setLinkedTaskId,
+    mode,
+    shouldPlaySounds,
+    shouldUseNotifications,
+    toggleNotifications,
+    toggleSounds,
+    startSession,
+    stopSession,
+    pauseSession,
+    resumeSession,
+  } = usePomodoro();
   const taskStore = useTaskStore();
   const [showControls, setShowControls] = useState(false);
   const [availableTasks, setAvailableTasks] = useState<Task[]>([]);
@@ -26,9 +44,14 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
 
   // Update Pomodoro duration based on user preferences
   useEffect(() => {
-    pomodoro.setDuration(preferences.pomodoroDuration);
-    pomodoro.setBreakDuration(preferences.breakDuration);
-  }, [preferences.pomodoroDuration, preferences.breakDuration]);
+    setDuration(preferences.pomodoroDuration);
+    setBreakDuration(preferences.breakDuration);
+  }, [
+    preferences.pomodoroDuration,
+    preferences.breakDuration,
+    setDuration,
+    setBreakDuration,
+  ]);
 
   // Load active tasks when task selector is opened
   useEffect(() => {
@@ -49,14 +72,12 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
   };
 
   // Get the linked task if one exists
-  const linkedTask = pomodoro.linkedTaskId
-    ? taskStore.getTaskById(pomodoro.linkedTaskId)
-    : null;
+  const linkedTask = linkedTaskId ? taskStore.getTaskById(linkedTaskId) : null;
 
   // Format the time remaining with visual indication for active timers
   const getTimeDisplay = () => {
-    const timeString = pomodoro.formattedTimeRemaining();
-    if (pomodoro.isActive && !pomodoro.isPaused) {
+    const timeString = formattedTimeRemaining();
+    if (isActive && !isPaused) {
       return (
         <div className="digital-clock-active">
           {timeString.split(":")[0]}
@@ -80,7 +101,7 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
         className={`flex items-center cursor-pointer ${
           dockMode ? "rounded px-2 py-1" : "px-4 py-2 rounded border"
         } ${
-          pomodoro.isActive
+          isActive
             ? "border-primary bg-primary/5"
             : dockMode
             ? ""
@@ -89,17 +110,21 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
         onClick={toggleControls}
       >
         <div className="flex items-center">
-          {pomodoro.isActive && (
+          {isActive && (
             <div className={`${dockMode ? "mr-1.5" : "mr-2"}`}>
               <CircularProgress
-                progress={pomodoro.progress()}
+                progress={progress()}
                 size={dockMode ? 20 : 18}
                 strokeWidth={2}
                 className="text-foreground dark:text-white"
               />
             </div>
           )}
-          <div className={`font-mono ${dockMode ? "text-sm font-medium" : "text-lg"}`}>
+          <div
+            className={`font-mono ${
+              dockMode ? "text-sm font-medium" : "text-lg"
+            }`}
+          >
             {getTimeDisplay()}
           </div>
         </div>
@@ -108,7 +133,7 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
             className={`text-sm ml-2 text-muted-foreground ${
               dockMode ? "text-xs flex-1" : ""
             }`}
-            style={{ maxWidth: dockMode ? '196px' : 'auto' }}
+            style={{ maxWidth: dockMode ? "196px" : "auto" }}
           >
             <span className="opacity-80">
               • {linkedTask.title.substring(0, dockMode ? 25 : 25)}
@@ -128,24 +153,24 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
         >
           <div className="text-center mb-4">
             <div className="text-sm text-muted-foreground">
-              {pomodoro.mode === "work" ? "Focus Time" : "Break Time"}
+              {mode === "work" ? "Focus Time" : "Break Time"}
             </div>
             <div className="flex justify-center items-center mt-1">
-              {pomodoro.isActive && !pomodoro.isPaused && (
+              {isActive && !isPaused && (
                 <CircularProgress
-                  progress={pomodoro.progress()}
+                  progress={progress()}
                   size={60}
                   strokeWidth={4}
                   className="text-foreground dark:text-white"
                 >
                   <div className="digital-clock text-xl font-mono">
-                    {pomodoro.formattedTimeRemaining()}
+                    {formattedTimeRemaining()}
                   </div>
                 </CircularProgress>
               )}
-              {(!pomodoro.isActive || pomodoro.isPaused) && (
+              {(!isActive || isPaused) && (
                 <div className="digital-clock text-2xl font-mono">
-                  {pomodoro.formattedTimeRemaining()}
+                  {formattedTimeRemaining()}
                 </div>
               )}
             </div>
@@ -162,7 +187,7 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    pomodoro.setLinkedTaskId(null);
+                    setLinkedTaskId(null);
                   }}
                   className="text-xs text-destructive hover:underline ml-2"
                 >
@@ -203,7 +228,7 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
                         className="w-full text-left px-2 py-1.5 text-sm hover:bg-muted rounded-sm flex justify-between items-center"
                         onClick={(e) => {
                           e.stopPropagation();
-                          pomodoro.setLinkedTaskId(task.id);
+                          setLinkedTaskId(task.id);
                           setIsTaskSelectorOpen(false);
                         }}
                       >
@@ -232,7 +257,7 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
             </div>
           )}
 
-          {linkedTask && !pomodoro.isActive && (
+          {linkedTask && !isActive && (
             <div className="mb-4">
               <div className="text-sm font-medium mb-1">
                 Estimated pomodoros:
@@ -262,8 +287,8 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
             <label className="flex items-center">
               <input
                 type="checkbox"
-                checked={pomodoro.shouldPlaySounds}
-                onChange={() => pomodoro.toggleSounds()}
+                checked={shouldPlaySounds}
+                onChange={() => toggleSounds()}
                 className="mr-1.5 h-3.5 w-3.5 rounded"
               />
               Sound
@@ -271,8 +296,8 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
             <label className="flex items-center">
               <input
                 type="checkbox"
-                checked={pomodoro.shouldUseNotifications}
-                onChange={() => pomodoro.toggleNotifications()}
+                checked={shouldUseNotifications}
+                onChange={() => toggleNotifications()}
                 className="mr-1.5 h-3.5 w-3.5 rounded"
               />
               Notifications
@@ -281,13 +306,13 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
 
           {/* Timer controls */}
           <div className="flex justify-center gap-2">
-            {!pomodoro.isActive ? (
+            {!isActive ? (
               <button
                 onClick={() => {
                   // Start Pomodoro with linked task if available
-                  pomodoro.startSession(
+                  startSession(
                     userId,
-                    pomodoro.linkedTaskId || undefined,
+                    linkedTaskId || undefined,
                     undefined, // Use default durations from preferences
                     undefined
                   );
@@ -295,19 +320,19 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
                 }}
                 className="btn-primary w-full py-2"
               >
-                Start {pomodoro.linkedTaskId ? "Task" : "Focus"}
+                Start {linkedTaskId ? "Task" : "Focus"}
               </button>
-            ) : !pomodoro.isPaused ? (
+            ) : !isPaused ? (
               <>
                 <button
-                  onClick={() => pomodoro.pauseSession()}
+                  onClick={() => pauseSession()}
                   className="bg-muted text-foreground px-3 py-1.5 rounded text-sm flex-1"
                 >
                   Pause
                 </button>
                 <button
                   onClick={() => {
-                    pomodoro.stopSession(false);
+                    stopSession(false);
                     setShowControls(false);
                   }}
                   className="bg-destructive text-destructive-foreground px-3 py-1.5 rounded text-sm flex-1"
@@ -318,14 +343,14 @@ export const NavbarPomodoroTimer: React.FC<NavbarPomodoroTimerProps> = ({
             ) : (
               <>
                 <button
-                  onClick={() => pomodoro.resumeSession()}
+                  onClick={() => resumeSession()}
                   className="bg-primary text-primary-foreground px-3 py-1.5 rounded text-sm flex-1"
                 >
                   Resume Focus
                 </button>
                 <button
                   onClick={() => {
-                    pomodoro.stopSession(false);
+                    stopSession(false);
                     setShowControls(false);
                   }}
                   className="bg-destructive text-destructive-foreground px-3 py-1.5 rounded text-sm flex-1"

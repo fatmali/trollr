@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Task, TaskPriority } from '@/types';
+import { Task } from '@/types';
 import { useLocalUser } from '@/context/LocalUserProvider';
 import { ConfettiEffect } from '@/components/ui/ConfettiEffect';
 
@@ -25,20 +25,6 @@ export const TaskItem: React.FC<TaskItemProps> = ({
   const { updateAchievementProgress, addReward, productivityScore } = useLocalUser();
   const [showConfetti, setShowConfetti] = useState(false);
   const [commitmentState, setCommitmentState] = useState<'idle' | 'committing' | 'committed'>('idle');
-  
-  // Function to get appropriate card variant based on task priority
-  const getCardVariant = (priority: TaskPriority) => {
-    switch (priority) {
-      case 'high':
-        return 'priority.high';
-      case 'medium':
-        return 'priority.medium';
-      case 'low':
-        return 'priority.low';
-      default:
-        return 'default';
-    }
-  };
 
   // Format date for display
   const formatDate = (dateString?: string) => {
@@ -141,7 +127,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({
 
   return (
     <Card 
-      variant={getCardVariant(task.priority)} 
+      variant={task.priority} 
       className={`mb-4 transition-all duration-200 hover:shadow-md ${
         task.status === 'completed' ? 'opacity-75' : ''
       } ${isOverdue() ? 'border-red-500 border-opacity-50' : ''}

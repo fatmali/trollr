@@ -35,7 +35,6 @@ export const LofiPlayer: React.FC<LofiPlayerProps> = ({
     setStation,
     addListener,
     pause,
-    play,
     removeListener,
   } = useLofiStore();
 

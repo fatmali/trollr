@@ -6,7 +6,7 @@ import { MCPContext, MCPResponse, TrollTriggerType } from "@/types";
 // In a real implementation, this would make HTTP requests to your Azure Functions endpoints
 
 // Base URL for Azure Functions (would be an environment variable in production)
-const BASE_URL = '/api/trollr'; // This will proxy through Next.js API routes
+//const BASE_URL = '/api/trollr'; // This will proxy through Next.js API routes
 
 export async function generateTrollMessage(
   context: MCPContext,

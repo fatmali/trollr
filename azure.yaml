@@ -1,0 +1,9 @@
+name: trollr
+metadata:
+  template: trollr-nextjs@1.0.0
+services:
+  web:
+    project: .
+    language: js
+    host: staticwebapp
+    dist: out

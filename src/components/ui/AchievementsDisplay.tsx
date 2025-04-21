@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLocalUser } from '@/context/LocalUserProvider';
-import { Button } from '@/components/ui/Button';
 import { Achievement, Reward } from '@/types';
 
 export function AchievementsDisplay() {

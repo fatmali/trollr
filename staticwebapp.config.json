@@ -1,0 +1,17 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/images/*.{png,jpg,gif,ico}", "/*.{css,scss,js,json}"]
+  },
+  "platform": {
+    "apiRuntime": "node:18"
+  },
+  "routes": [
+    {
+      "route": "/*",
+      "serve": "/",
+      "statusCode": 200
+    }
+  ],
+  "trailingSlash": "auto"
+}
