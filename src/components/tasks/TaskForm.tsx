@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { Task, TaskPriority, TaskStatus } from '@/types';
 import { useTaskStore } from '@/hooks/useTasks';
-import { useLocalUser } from '@/context/LocalUserProvider';
-import { useTrollMessages } from '@/hooks/useTrollMessages';
 import { usePomodoroStore } from '@/hooks/usePomodoro';
 
 interface TaskFormProps {
@@ -21,8 +19,6 @@ export const TaskForm: React.FC<TaskFormProps> = ({
   onCancel,
 }) => {
   const { addTask, updateTask } = useTaskStore();
-  const { stats } = useLocalUser();
-  const { generateMessage } = useTrollMessages();
   const pomodoroStore = usePomodoroStore();
   
   const [title, setTitle] = useState(initialTask?.title || '');
@@ -98,24 +94,6 @@ export const TaskForm: React.FC<TaskFormProps> = ({
     } else {
       // Creating new task
       addTask(userId, title, description, priority, deadlineISO, tagArray, codeSnippet || undefined);
-      
-      // Generate a trollr message for new task
-      const context = {
-        userData: {
-          id: userId,
-          displayName: "Developer",
-          workHabits: [],
-          commonExcuses: [],
-          productivityPatterns: [],
-          stats: stats
-        },
-        timeData: {
-          timeOfDay: new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening',
-          dayOfWeek: new Date().toLocaleDateString('en-US', { weekday: 'long' }),
-        }
-      };
-      
-      generateMessage(userId, context, 'inactivity');
     }
     
     onSubmit();

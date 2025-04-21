@@ -3,7 +3,6 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { LocalUserProvider } from "@/context/LocalUserProvider";
 import { ProductivityDock } from "@/components/ui/ProductivityDock";
-import { TrollMessageDisplay } from "@/components/troll/TrollMessageDisplay";
 import { RewardsDisplay } from "@/components/ui/AchievementsDisplay";
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle";
 import HeaderTaskSearch from "@/components/tasks/HeaderTaskSearch";
@@ -31,13 +30,7 @@ export default function RootLayout({
         className="antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-200"
       >
         <LocalUserProvider>
-          <div className="trollr-pattern-bg min-h-screen flex flex-col">
-            {/* Toast message - always visible even when scrolling */}
-            <TrollMessageDisplay />
-            
-            {/* Rewards notifications system - displays variable rewards */}
-            <RewardsDisplay />
-            
+          <div className="trollr-pattern-bg min-h-screen flex flex-col">            
             {/* Header - shared across all pages */}
             <header className="bg-background/80 backdrop-blur-sm z-30 sticky top-0">
               <Suspense fallback={<div className="h-16"></div>}>

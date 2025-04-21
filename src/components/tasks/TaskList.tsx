@@ -7,7 +7,6 @@ import { TaskForm } from './TaskForm';
 import { Button } from '@/components/ui/Button';
 import { useTaskStore } from '@/hooks/useTasks';
 import { useLocalUser } from '@/context/LocalUserProvider';
-import { useTrollMessages } from '@/hooks/useTrollMessages';
 
 export const TaskList: React.FC = () => {
   const { userId, stats, updateStats } = useLocalUser();
@@ -17,7 +16,6 @@ export const TaskList: React.FC = () => {
     completeTask, 
     getFilteredTasks,
   } = useTaskStore();
-  const { generateMessage } = useTrollMessages();
   
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | undefined>(undefined);
@@ -61,32 +59,6 @@ export const TaskList: React.FC = () => {
         tasksCompleted: stats.tasksCompleted + 1,
       });
       
-      // Generate a completion message
-      const context = {
-        userData: {
-          id: userId,
-          displayName: "Developer",
-          workHabits: [],
-          commonExcuses: [],
-          productivityPatterns: [],
-          stats: stats
-        },
-        taskData: {
-          id: task.id,
-          title: task.title,
-          description: task.description,
-          deadline: task.deadline,
-          priority: task.priority,
-          createdAt: task.createdAt,
-          completionRate: 0 // We don't track this yet
-        },
-        timeData: {
-          timeOfDay: new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening',
-          dayOfWeek: new Date().toLocaleDateString('en-US', { weekday: 'long' }),
-        }
-      };
-      
-      await generateMessage(userId, context, 'completion', task.id);
     }
   };
   
@@ -151,24 +123,6 @@ export const TaskList: React.FC = () => {
         updateStats({
           tasksOverdue: stats.tasksOverdue + overdueCount,
         });
-        
-        // Generate an overdue message if tasks are overdue
-        const context = {
-          userData: {
-            id: userId,
-            displayName: "Developer",
-            workHabits: [],
-            commonExcuses: [],
-            productivityPatterns: [],
-            stats: stats
-          },
-          timeData: {
-            timeOfDay: new Date().getHours() < 12 ? 'morning' : new Date().getHours() < 18 ? 'afternoon' : 'evening',
-            dayOfWeek: new Date().toLocaleDateString('en-US', { weekday: 'long' }),
-          }
-        };
-        
-        generateMessage(userId, context, 'overdue');
       }
     };
     
@@ -179,7 +133,7 @@ export const TaskList: React.FC = () => {
     const intervalId = setInterval(checkOverdueTasks, 60000); // Check every minute
     
     return () => clearInterval(intervalId);
-  }, [allTasks, updateTask, userId, generateMessage, stats, updateStats]);
+  }, [allTasks, updateTask, userId, stats, updateStats]);
   
   return (
     <div className="container mx-auto py-6">
