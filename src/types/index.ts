@@ -84,7 +84,7 @@ export interface PomodoroSession {
   interruptions: number;
 }
 
-// Troll message types
+// Trollr message types
 export type TrollTriggerType = 
   'deadline_approaching' | 
   'overdue' | 

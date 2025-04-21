@@ -307,7 +307,7 @@ export const usePomodoroStore = create<PomodoroTimerState>()(
       },
     }),
     {
-      name: 'troll-pomodoro-storage',
+      name: 'trollr-pomodoro-storage',
       onRehydrateStorage: () => (state) => {
         // Ensure timer is not active when rehydrating state
         if (state) {

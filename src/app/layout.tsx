@@ -3,7 +3,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { LocalUserProvider } from "@/context/LocalUserProvider";
 import { ProductivityDock } from "@/components/ui/ProductivityDock";
-import { TrollMessageDisplay } from "@/components/troll/TrollMessageDisplay";
+import { TrollMessageDisplay } from "@/components/trollr/TrollMessageDisplay";
 import { RewardsDisplay } from "@/components/ui/AchievementsDisplay";
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle";
 import { ProductivityScoreDisplay } from "@/components/ui/ProductivityScoreDisplay";
@@ -18,7 +18,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Troll - Get Shit Done",
+  title: "Trollr - Get Shit Done",
   description: "A sassy todo app with built-in AI trolling to motivate productivity",
 };
 
@@ -33,7 +33,7 @@ export default function RootLayout({
         className="antialiased bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-200"
       >
         <LocalUserProvider>
-          <div className="troll-pattern-bg min-h-screen flex flex-col">
+          <div className="trollr-pattern-bg min-h-screen flex flex-col">
             {/* Toast message - always visible even when scrolling */}
             <TrollMessageDisplay />
             
@@ -55,7 +55,7 @@ export default function RootLayout({
             {/* Footer - shared across all pages */}
             <footer className="mt-auto">
               <div className="container mx-auto py-6 px-6 text-center text-muted-foreground text-xs">
-                <p>Troll &copy; {new Date().getFullYear()} - <span className="troll-text">Helping you get shit done since 2025</span></p>
+                <p>Trollr &copy; {new Date().getFullYear()} - <span className="trollr-text">Helping you get shit done since 2025</span></p>
                 <p>Vibe Coded with ❤️ by <a href="https://fatmaali.dev" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Fatma</a> and Github Copilot</p>
               </div>
             </footer>
@@ -75,7 +75,7 @@ function SharedHeader() {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">
           <Link href="/" className="text-xl text-primary font-medium">
-            Troll
+            Trollr
           </Link>
         </div>
         

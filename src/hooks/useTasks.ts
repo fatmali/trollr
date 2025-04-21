@@ -164,7 +164,7 @@ export const useTaskStore = create<TaskState>()(
       },
     }),
     {
-      name: 'troll-tasks-storage',
+      name: 'trollr-tasks-storage',
     }
   )
 );

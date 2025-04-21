@@ -8,7 +8,7 @@
 :root {
   --font-mono: var(--font-poppins), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --font-sans: var(--font-poppins), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  --font-troll: var(--font-poppins), sans-serif;
+  --font-trollr: var(--font-poppins), sans-serif;
   
   /* Minimal Theme Colors */
   --primary: #3b82f6;
@@ -316,9 +316,9 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateX(-50%) translateY(0);
 }
 
-/* Troll font for funny elements */
-.troll-text {
-  font-family: var(--font-troll);
+/* Trollr font for funny elements */
+.trollr-text {
+  font-family: var(--font-trollr);
 }
 
 /* Music Wave Animation */

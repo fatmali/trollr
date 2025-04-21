@@ -1,6 +1,6 @@
-# Troll - Developer-Focused Todo App
+# Trollr - Helping you get shit done since 2025
 
-Troll is a developer-focused todo app with built-in AI trolling to motivate productivity. It combines task management with a pomodoro timer and uses LLMs to generate sarcastic, motivational messages.
+Trollr is a todo app with built-in AI trolling to motivate productivity. It combines task management with a pomodoro timer and uses LLMs to generate sarcastic, motivational messages.
 
 ## Features
 
@@ -44,7 +44,7 @@ npm run dev
   /components
     /tasks  # Task-related components
     /pomodoro # Pomodoro timer components
-    /troll  # Troll messaging components
+    /trollr  # Trollr messaging components
     /ui     # Reusable UI components
   /context  # React contexts
   /hooks    # Custom React hooks

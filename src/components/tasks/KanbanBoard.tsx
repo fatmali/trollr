@@ -265,7 +265,7 @@ export const KanbanBoard: React.FC = () => {
                 <p className="text-muted-foreground text-sm">
                   {emptyColumnMessages.not_started.title}
                 </p>
-                <p className="text-xs text-muted-foreground mt-1 troll-text">
+                <p className="text-xs text-muted-foreground mt-1 trollr-text">
                   {emptyColumnMessages.not_started.subtitle}
                 </p>
               </div>
@@ -323,7 +323,7 @@ export const KanbanBoard: React.FC = () => {
                 <p className="text-muted-foreground text-sm">
                   {emptyColumnMessages.in_progress.title}
                 </p>
-                <p className="text-xs text-muted-foreground mt-1 troll-text">
+                <p className="text-xs text-muted-foreground mt-1 trollr-text">
                   {emptyColumnMessages.in_progress.subtitle}
                 </p>
               </div>
@@ -381,7 +381,7 @@ export const KanbanBoard: React.FC = () => {
                 <p className="text-muted-foreground text-sm">
                   {emptyColumnMessages.completed.title}
                 </p>
-                <p className="text-xs text-muted-foreground mt-1 troll-text">
+                <p className="text-xs text-muted-foreground mt-1 trollr-text">
                   {emptyColumnMessages.completed.subtitle}
                 </p>
               </div>

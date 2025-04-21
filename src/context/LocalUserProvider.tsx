@@ -82,8 +82,8 @@ const defaultAchievements: Achievement[] = [
   },
   {
     id: 'troll_friend',
-    name: 'Troll Whisperer',
-    description: 'React positively to 10 troll messages',
+    name: 'Trollr Whisperer',
+    description: 'React positively to 10 trollr messages',
     iconType: 'sparkles',
     category: 'troll_interaction',
     progress: 0,

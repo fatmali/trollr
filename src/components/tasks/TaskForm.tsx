@@ -99,7 +99,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({
       // Creating new task
       addTask(userId, title, description, priority, deadlineISO, tagArray, codeSnippet || undefined);
       
-      // Generate a troll message for new task
+      // Generate a trollr message for new task
       const context = {
         userData: {
           id: userId,

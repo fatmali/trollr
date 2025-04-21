@@ -159,7 +159,7 @@ export const TrollMessageDisplay: React.FC = () => {
     if (currentMessage) {
       addReaction(currentMessage.id, reaction);
       
-      // Progress troll interaction achievement for positive reactions
+      // Progress trollr interaction achievement for positive reactions
       if (reaction === 'helpful' || reaction === 'funny') {
         updateAchievementProgress('troll_friend', 1);
       }
@@ -193,7 +193,7 @@ export const TrollMessageDisplay: React.FC = () => {
     }
   };
 
-  // Animation variants for the troll message - psychological impact increases with severity
+  // Animation variants for the trollr message - psychological impact increases with severity
   const getAnimationClass = (severity: number) => {
     if (severity >= 5) return 'animate-bounce-small animate-wiggle';
     if (severity >= 4) return 'animate-wiggle';
@@ -201,35 +201,35 @@ export const TrollMessageDisplay: React.FC = () => {
     return '';
   };
 
-  // Get troll titles based on severity and user's productivity
+  // Get trollr titles based on severity and user's productivity
   // This creates a sense of progression and relationship with the character
   const getTrollTitle = (severity: number) => {
     // Base titles
     const baseTitles = [
-      "Troll Assistant",
-      "Troll Buddy",
-      "Troll Coach",
-      "Troll Overlord",
+      "Trollr Assistant",
+      "Trollr Buddy",
+      "Trollr Coach",
+      "Trollr Overlord",
       "TROLL TASKMASTER"
     ];
     
     // For users with very high productivity, give respectful titles
     if (productivityScore >= 80) {
       return severity >= 4 
-        ? "Troll (Actually Impressed)" 
-        : "Troll (Reluctantly Respectful)";
+        ? "Trollr (Actually Impressed)" 
+        : "Trollr (Reluctantly Respectful)";
     }
     
-    // For users with lots of "annoying" reactions, make troll more confrontational
+    // For users with lots of "annoying" reactions, make trollr more confrontational
     if (previousReactions.annoying > 5) {
       return severity >= 4 
-        ? "Troll (Extra Spicy)" 
-        : "Troll (Not Backing Down)";
+        ? "Trollr (Extra Spicy)" 
+        : "Trollr (Not Backing Down)";
     }
     
-    // For users with lots of "funny" reactions, make troll more humor-focused
+    // For users with lots of "funny" reactions, make trollr more humor-focused
     if (previousReactions.funny > 5) {
-      return "Troll (Comedy Tour)";
+      return "Trollr (Comedy Tour)";
     }
     
     // Default behavior
@@ -256,10 +256,10 @@ export const TrollMessageDisplay: React.FC = () => {
   
   return (
     <div 
-      className={`fixed top-6 right-6 max-w-xs w-full p-4 z-50 rounded-lg shadow-troll border-l-4 ${getSeverityColor(currentMessage.severity)} transition-all duration-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'} ${getAnimationClass(currentMessage.severity)}`}
+      className={`fixed top-6 right-6 max-w-xs w-full p-4 z-50 rounded-lg shadow-trollr border-l-4 ${getSeverityColor(currentMessage.severity)} transition-all duration-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'} ${getAnimationClass(currentMessage.severity)}`}
     >
       <div className="flex justify-between items-center">
-        <h3 className={`text-sm flex items-center gap-2 ${currentMessage.severity >= 4 ? 'troll-text' : 'font-medium text-primary'}`}>
+        <h3 className={`text-sm flex items-center gap-2 ${currentMessage.severity >= 4 ? 'trollr-text' : 'font-medium text-primary'}`}>
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className={currentMessage.severity >= 4 ? 'text-destructive' : 'text-primary'}>
             <path d="M12 2C6.48 2 2 6.48 2 12c0 1.82.49 3.53 1.35 5L2 22l5-1.35C8.47 21.51 10.18 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"></path>
           </svg>

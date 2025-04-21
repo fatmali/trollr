@@ -67,7 +67,7 @@ export const TaskList: React.FC = () => {
       // Creating new task
       addTask(userId, title, description, priority, deadline, tags, codeSnippet);
       
-      // Generate a troll message for new task
+      // Generate a trollr message for new task
       const context = {
         userData: {
           id: userId,

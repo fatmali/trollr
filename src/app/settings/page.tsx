@@ -104,10 +104,10 @@ export default function SettingsPage() {
               
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Troll Intensity (1-10)</label>
+                  <label className="block text-sm font-medium mb-2">Trollr Intensity (1-10)</label>
                   {showExplanations && (
                     <p className="text-xs text-slate-600 dark:text-slate-400 mb-3 bg-slate-100 dark:bg-slate-800 p-2 rounded">
-                      Controls how intensely the troll messages respond to your productivity patterns. 
+                      Controls how intensely the trollr messages respond to your productivity patterns. 
                       Lower values are more gentle, higher values are more direct.
                     </p>
                   )}

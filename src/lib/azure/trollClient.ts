@@ -6,7 +6,7 @@ import { MCPContext, MCPResponse, TrollTriggerType } from "@/types";
 // In a real implementation, this would make HTTP requests to your Azure Functions endpoints
 
 // Base URL for Azure Functions (would be an environment variable in production)
-const BASE_URL = '/api/troll'; // This will proxy through Next.js API routes
+const BASE_URL = '/api/trollr'; // This will proxy through Next.js API routes
 
 export async function generateTrollMessage(
   context: MCPContext,
@@ -20,7 +20,7 @@ export async function generateTrollMessage(
     await new Promise(resolve => setTimeout(resolve, 500));
     
     // Log the context and trigger type (useful for debugging)
-    console.log('Generating troll message:', { context, triggerType });
+    console.log('Generating trollr message:', { context, triggerType });
     
     // Create a mock response based on the trigger type
     let message = '';
@@ -63,7 +63,7 @@ export async function generateTrollMessage(
       severity
     };
   } catch (error) {
-    console.error('Error generating troll message:', error);
+    console.error('Error generating trollr message:', error);
     return {
       message: "I'm feeling unusually kind today. You're off the hook... for now.",
       severity: 1

@@ -5,7 +5,7 @@ import { persist } from 'zustand/middleware';
 import { v4 as uuidv4 } from 'uuid';
 import { TrollMessage, TrollTriggerType, MCPContext, MCPResponse } from '@/types';
 
-// Temporary local implementation of troll messages until Azure Functions are set up
+// Temporary local implementation of trollr messages until Azure Functions are set up
 const LOCAL_TROLL_RESPONSES: Record<TrollTriggerType, string[]> = {
   deadline_approaching: [
     "Oh look, another deadline approaching. I'm sure you'll start working right before it's due. Classic you.",
@@ -127,7 +127,7 @@ export const useTrollMessages = create<TrollMessageState>()(
           
           return newMessage;
         } catch (error) {
-          console.error('Failed to generate troll message:', error);
+          console.error('Failed to generate trollr message:', error);
           // Fall back to local implementation
           return get().addMessage(userId, triggerType, taskId);
         }
@@ -170,7 +170,7 @@ export const useTrollMessages = create<TrollMessageState>()(
       }
     }),
     {
-      name: 'troll-messages-storage'
+      name: 'trollr-messages-storage'
     }
   )
 );
