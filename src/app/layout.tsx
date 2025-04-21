@@ -3,7 +3,6 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { LocalUserProvider } from "@/context/LocalUserProvider";
 import { ProductivityDock } from "@/components/ui/ProductivityDock";
-import { RewardsDisplay } from "@/components/ui/AchievementsDisplay";
 import { DarkModeToggle } from "@/components/ui/DarkModeToggle";
 import HeaderTaskSearch from "@/components/tasks/HeaderTaskSearch";
 import Link from "next/link";

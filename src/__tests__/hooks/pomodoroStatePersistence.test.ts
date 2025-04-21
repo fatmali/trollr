@@ -112,7 +112,6 @@ describe('Pomodoro State Persistence', () => {
   });
 
   test('should persist linked task id', () => {
-    const userId = 'test-user';
     const taskId = 'task-123';
     
     // Create first hook and link a task

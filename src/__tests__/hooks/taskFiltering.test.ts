@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useTaskStore } from '@/hooks/useTasks';
-import { Task, TaskPriority, TaskStatus } from '@/types';
+import { TaskPriority, TaskStatus } from '@/types';
 
 // Mock dependencies
 jest.mock('uuid', () => ({
